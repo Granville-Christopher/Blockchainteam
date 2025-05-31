@@ -1,0 +1,32 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+.mmbd{
+  background: linear-gradient(150deg, #d600c0, #000000, #000000);
+}
+.bitcoin img{
+  position: relative;
+  width: 70px !important;
+  margin-top: 100px;
+}
+.litecoin img{
+  background-color: #345D9D !important;
+  border-radius: 100%;
+}
+.bchain{
+  border-radius: 50%;
+  
+}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
