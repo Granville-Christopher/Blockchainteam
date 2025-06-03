@@ -1,10 +1,12 @@
 // IssueReportingPage Component - NEW PAGE
 import React, { useState } from "react";
+import emailjs from "emailjs-com";
 
 const IssueReportingPage = ({ onBack }) => {
   const [selectedIssue, setSelectedIssue] = useState("");
   const [issueDescription, setIssueDescription] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [error, setError] = useState("");
 
   const issueOptions = [
     "Account verification",
@@ -17,13 +19,31 @@ const IssueReportingPage = ({ onBack }) => {
   ];
 
   const handleSubmit = () => {
-    console.log("Issue Submitted:", { selectedIssue, issueDescription });
-    setShowModal(true);
+    emailjs
+    .send(
+      "service_n8rslz8",
+      "template_if6snru",
+      {
+        selectedIssue: selectedIssue,
+        issueDescription: issueDescription,
+      },
+      "AQ3rmqLrAxGjWGBuI"
+    )
+    .then(() => {
+      console.log("selectedIssue sent!");
+      setShowModal(true);
+    })
+    .catch((err) => {
+      console.error(err);
+      setError("Failed to send email.");
+    });
   };
+  
 
   return (
     <div className="relative min-h-screen bg-[#1A1A2E] flex flex-col items-center p-4 font-sans text-white">
       {/* Back button */}
+
       <button
         onClick={onBack}
         className="absolute top-6 left-6 p-2 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors duration-200 z-10"
@@ -114,16 +134,21 @@ const IssueReportingPage = ({ onBack }) => {
             This is a required question
           </p>
         </div>
-
+        {/* Error Message */}
+        {error && (
+          <div className="text-red-400 font-medium text-sm -mt-4 mb-2">
+            {error}
+          </div>
+        )}
         <h2 className="text-sm mb-2 font-semibold text-gray-300 ">
-          Describe your issue (optional)
+          Describe your issue(optional)
         </h2>
         <textarea
           rows="5"
           placeholder="Please provide details about your issue."
           className="w-full p-4 bg-[#2A2A3E] border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white placeholder-gray-500 resize-none"
           value={issueDescription}
-          onChange={(e) => setIssueDescription(e.target.value)}
+          onChange={(e) => setIssueDescription(e.target.value)} required
         ></textarea>
 
         <button
